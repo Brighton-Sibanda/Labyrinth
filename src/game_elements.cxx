@@ -10,3 +10,4 @@ points, std::vector<int> velocity)
            velocity(velocity)
 {}
 
+//This is the change i made
