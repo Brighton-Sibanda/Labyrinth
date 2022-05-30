@@ -31,6 +31,7 @@ Model::Model(Rectangle all,
          time(300)
 
 {
+
 }
 
 bool pos_comp (Model::Position pos, std::vector<int> pos2){
@@ -50,6 +51,8 @@ Model::get_player(){
 bool
 
 Model::safe_position(Position pos){
-return true;
+
+     return true;
 
 }
+
