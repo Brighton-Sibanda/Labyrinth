@@ -49,10 +49,10 @@ public:
     bool player_against_wall(Position pos);//checks whether player can slide up
     bool move(Dimensions dir);//moves the player in the given direction
     void on_frame(float);//advances the game by a certain amount of frames
-    void change_to_hidden_place();//changes the attributes of model to the
+    void change_to_stage_1();//changes the attributes of model to the
     // hidden
     // place
-    void change_to_normal_model();//reverts model back to its original
+    void change_to_stage_0();//reverts model back to its original
     // attributes
     int model_state = 0;
     void shoot();//shoot arrows in a straight line

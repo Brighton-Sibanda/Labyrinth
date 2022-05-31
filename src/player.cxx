@@ -9,7 +9,7 @@ Player::Player()
       health(4),
       score(0),
       velocity({0,0}),
-      acceleration(0)
+      acceleration({0, 0})
 
 
 {}
@@ -30,7 +30,7 @@ std::vector<int>
 Player::get_velocity(){
     return velocity;
 }
-float
+std::vector<int>
 Player::get_acceleration(){
     return acceleration;
 }
@@ -43,7 +43,7 @@ Player::set_score(float change){
     score += change;
 }
 void
-Player::set_acceleration(float change){
+Player::set_acceleration(std::vector<int> change){
 
   acceleration = change;}
 

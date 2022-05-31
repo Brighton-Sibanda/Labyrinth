@@ -6,7 +6,7 @@
 #define GAME_PLAYER_HXX
 
 #include <stdio.h>
-#include<vector>
+#include <vector>
 
 
 using namespace std;
@@ -23,10 +23,10 @@ public:
     int get_health();
     float get_score();
     std::vector<int> get_velocity();
-    float get_acceleration();
+    std::vector<int> get_acceleration();
     void reduce_health();
     void set_score(float change);
-    void set_acceleration(float acc);
+    void set_acceleration(std::vector<int> acc);
     void set_pos(int, int);
     void set_velocity(std::vector<int>);
 
@@ -35,7 +35,7 @@ private:
     int health;
     float score;
     std::vector<int> velocity;
-    float acceleration;
+    std::vector<int> acceleration;
 };
 
 
