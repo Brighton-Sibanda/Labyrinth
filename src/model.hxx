@@ -48,12 +48,13 @@ public:
     bool player_against_wall(Position pos);//checks whether player can slide up
     bool move(Dimensions dir);//moves the player in the given direction
     void on_frame(float);//advances the game by a certain amount of frames
-    void change_to_hidden_place();//changes attributes of model to the hidden
+    void change_to_hidden_place();//changes the attributes of model to the
+    // hidden
     // place
     void change_to_normal_model();//reverts model back to its original
     // attributes
     int model_state = 0;
-
+    void shoot();//shoots arrows in a straight line
 
 private:
     //char board_[3][3];
@@ -68,7 +69,8 @@ private:
     bool is_game_over = true;
     vector wall_;
     Position door_pos;
-    float time;
+    float time_for_points;
     vector arrows_;
+    int time_total;
 
 };

@@ -19,11 +19,12 @@ Model::Model(Rectangle all,
          player_(),
          wall_(wall),
          door_pos(door),
-         time(300),
+         time_for_points(300),
          arrows_(arrow)
 
-{
 
+{
+    time_total =0;
 }
 
 Model::Position
@@ -239,10 +240,12 @@ Model::move(Dimensions dir){
 
 void
 Model::on_frame(float dt){
-    time -= dt;
+    time_for_points -= dt;
+    time_total += 1;
     if (player_.get_health()==0){
         set_game_over();
     }
+
 }
 
 void
@@ -254,3 +257,26 @@ void
 Model::change_to_normal_model(){
 }
 
+void
+Model::shoot(){
+    if (time_total % 2 == 1){
+        return;
+    }
+    if (arrows_.empty()){
+        arrows_.push_back({shooter_[0].x + 1, shooter_[0].y});
+    }
+    else {
+        for (Position pos: arrows_){
+            Position next = {pos.x + 1, pos.y};
+            arrows_.erase(arrows_.begin() + get_element_index(arrows_, pos));
+            arrows_.push_back(next);
+            for (Position pos_wall: wall_){
+                if (pos_wall == next){
+                    arrows_.pop_back();
+                }
+            }
+
+        }
+        arrows_.push_back({shooter_[0].x + 1, shooter_[0].y});
+    }
+}
