@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include<vector>
 
+
 using namespace std;
 
 class Player
@@ -16,6 +17,8 @@ public:
     Player(); //constructor
     // health,
     // velocity, current pos, score, acc
+
+    //Get functions and set functions for private members
     std::vector<int> get_position();
     int get_health();
     float get_score();
@@ -23,8 +26,9 @@ public:
     float get_acceleration();
     void reduce_health();
     void set_score(float change);
-    void set_acceleration(float change);
+    void set_acceleration(float acc);
     void set_pos(int, int);
+    void set_velocity(std::vector<int>);
 
 private:
     std::vector<int> current_pos;

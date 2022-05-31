@@ -14,3 +14,45 @@ Player::Player()
 
 {}
 
+std::vector<int>
+Player::get_position(){
+    return current_pos;
+}
+int
+Player::get_health(){
+    return health;
+}
+float
+Player::get_score () {
+    return score;
+}
+std::vector<int>
+Player::get_velocity(){
+    return velocity;
+}
+float
+Player::get_acceleration(){
+    return acceleration;
+}
+void
+Player::reduce_health(){
+    health -= 1;
+}
+void
+Player::set_score(float change){
+    score += change;
+}
+void
+Player::set_acceleration(float change){
+
+  acceleration = change;}
+
+void
+Player::set_pos(int a, int b){
+    current_pos[0] = a;
+    current_pos[1] = b;
+}
+void
+Player::set_velocity(std::vector<int> velocityy){
+    velocity = velocityy;
+}

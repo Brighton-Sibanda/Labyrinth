@@ -7,6 +7,7 @@ main()
 {
     Controller(Model::Rectangle {}, Model::vector
     {},Model::vector{},Model::vector {},Model::vector {}, std::vector<int>
-            {0,0}, Model::vector{}, Model::Position {0,0}).run();
+            {0,0}, Model::vector{}, Model::Position {0,0}, Model::vector {})
+            .run();
     return 0;
 }

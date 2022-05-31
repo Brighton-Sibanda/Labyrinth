@@ -15,7 +15,9 @@ add_program(${GAME_EXE}
         ${MODEL_SRC}
         src/view.cxx
         src/controller.cxx
-        src/main.cxx)
+        src/main.cxx
+        src/player.cxx
+        src/game_elements.cxx)
 target_link_libraries(${GAME_EXE} ge211)
 
 add_test_program(model_test
