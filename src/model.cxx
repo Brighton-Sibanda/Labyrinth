@@ -186,7 +186,7 @@ Model::pos_to_vec(Position pos){
 void
 Model::set_game_over(){
     is_game_over = true;
-    player_.set_score(time);
+    player_.set_score(time_for_points);
 }
 
 bool
