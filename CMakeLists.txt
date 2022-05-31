@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
 
 # TODO: Change “game” to the name of your game (no spaces!):
-set(GAME_EXE game)
+set(GAME_EXE Labyrinth)
 
 project(${GAME_EXE} CXX)
 include(.cs211/cmake/CMakeLists.txt)

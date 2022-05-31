@@ -21,8 +21,6 @@ Model::Model(Rectangle all,
          door_pos(door),
          time_for_points(300),
          arrows_(arrow)
-
-
 {
     time_total =0;
 }

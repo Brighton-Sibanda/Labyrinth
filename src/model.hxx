@@ -54,7 +54,7 @@ public:
     void change_to_normal_model();//reverts model back to its original
     // attributes
     int model_state = 0;
-    void shoot();//shoots arrows in a straight line
+    void shoot();//shoot arrows in a straight line
 
 private:
     //char board_[3][3];
