@@ -34,9 +34,8 @@ public:
     std::vector<Position> get_spikes();//returns a vector of all spike positions
     void apply_elements(Position);//executes all game elements onto the player
     // if the player is in that position
-    int get_element_index(std::vector<Game_element>, Game_element);//helper
-    // for apply elements gets the index of a game element in a game elements
-    // vector
+    int get_element_index(std::vector<Position>, Position);//helper
+    // for apply elements gets the index of a position in a position vector
     Position get_door_pos();//gets the door's position in this model
     void set_spikes(std::vector<Position>);//sets the spikes vector
     void set_door_pos(Position);//sets the door position
@@ -49,6 +48,11 @@ public:
     bool player_against_wall(Position pos);//checks whether player can slide up
     bool move(Dimensions dir);//moves the player in the given direction
     void on_frame(float);//advances the game by a certain amount of frames
+    void change_to_hidden_place();//changes attributes of model to the hidden
+    // place
+    void change_to_normal_model();//reverts model back to its original
+    // attributes
+    int model_state = 0;
 
 
 private:

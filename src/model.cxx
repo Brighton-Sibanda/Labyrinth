@@ -99,21 +99,23 @@ void
 Model::apply_elements(Position pos){
     std::vector<Game_element> elements = Model::get_elements(pos);
     for (Game_element element: elements){
-        int index = Model::get_element_index(elements, element);
         if (strcmp (element.type, "coin") ==0){
+            int index = Model::get_element_index(coins, pos);
             coins.erase(coins.begin() + index);
             player_.set_score(10);
         }
         else if (strcmp (element.type, "treasure") ==0){
+            int index = Model::get_element_index(treasure, pos);
             treasure.erase(treasure.begin() + index);
             player_.set_score(100);}
         else if (strcmp (element.type, "arrow") ==0){
+            int index = Model::get_element_index(arrows_, pos);
             arrows_.erase(arrows_.begin() + index);
             player_.set_score(-10);
             player_.reduce_health();
         }
         else if (strcmp (element.type, "spike") ==0){
-            spikes_.erase(spikes_.begin() + index);
+            //spikes_.erase(spikes_.begin() + index);
             player_.set_score(-25);
             player_.reduce_health();
             //player_.set_pos(0,20);
@@ -124,11 +126,10 @@ Model::apply_elements(Position pos){
 
 
 int
-Model::get_element_index(std::vector<Game_element> elements, Game_element
-element){
+Model::get_element_index(std::vector<Position> elements, Position pos){
     int i = 0;
-    for (Game_element elemento : elements){
-        if (elemento.points == element.points){
+    for (Position elemento : elements){
+        if (pos == elemento){
             return i;
         }
         i++;
@@ -200,6 +201,9 @@ Model::player_against_wall(Position pos){
 bool
 Model::move(Dimensions dir){
 
+    if (is_game_over){
+        return false;
+    }
     Position current = vec_to_pos(player_.get_position());
     Position next = {current.x + dir.x, current.y +dir.y};
 
@@ -219,7 +223,17 @@ Model::move(Dimensions dir){
                 .get_acceleration();
         player_.set_velocity({x,y});
         }
-
+    if (player_.get_position() == trophy_){
+        set_game_over();
+    }
+    if (vec_to_pos(player_.get_position()) == door_pos && model_state==0){
+        Model::change_to_hidden_place();
+        model_state = 1;
+    }
+    else if (vec_to_pos(player_.get_position()) == door_pos && model_state==1){
+        Model::change_to_normal_model();
+        model_state = 0;
+    }
     return true;
 }
 
@@ -230,3 +244,13 @@ Model::on_frame(float dt){
         set_game_over();
     }
 }
+
+void
+Model::change_to_hidden_place(){
+
+}
+
+void
+Model::change_to_normal_model(){
+}
+
