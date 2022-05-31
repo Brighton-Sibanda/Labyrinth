@@ -5,11 +5,11 @@
 #include "player.hxx"
 
 Player::Player()
-    :current_pos({0,20}),
-    health(4),
-    score(0),
-    velocity({0,0}),
-     acceleration(0)
+    : current_pos({1,8}),
+      health(4),
+      score(0),
+      velocity({0,0}),
+      acceleration(0)
 
 
 {}

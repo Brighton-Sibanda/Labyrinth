@@ -7,7 +7,7 @@ Model::Model(Rectangle all,
              vector shooters,
              vector spikes,
              vector treasures,
-             std::vector<int> trophy,
+             Position trophy,
              vector wall,
              Position door, vector arrow)
         :coins(coins),

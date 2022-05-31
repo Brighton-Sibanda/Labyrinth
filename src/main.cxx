@@ -5,9 +5,14 @@
 int
 main()
 {
-    Controller(Model::Rectangle {}, Model::vector
-    {},Model::vector{},Model::vector {},Model::vector {}, std::vector<int>
-            {0,0}, Model::vector{}, Model::Position {0,0}, Model::vector {})
-            .run();
+    Controller(Model::Rectangle {},     // all
+               Model::vector {},        // coin
+               Model::vector {},         // shooter
+               Model::vector {},        // spike
+               Model::vector {},        // treasure
+               Model::Position {0,0},  //trophy
+               Model::vector{},         // wall
+               Model::Position {0,0},   // door_pos
+               Model::vector {}).run();       // arrow
     return 0;
 }

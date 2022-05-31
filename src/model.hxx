@@ -15,14 +15,15 @@ public:
     using Rectangle = ge211::Rect<int>;
     using Dimensions = ge211::Posn<int>;
 
-    Model(Rectangle all, vector co, vector sh,
-                   vector sp,
-                   vector tr, std::vector<int> trophy, vector wall, Position
-                   door_pos, vector arrow);
-
-
-    vector coins;
-    vector treasure;
+    Model(Rectangle all,
+          vector coin,
+          vector shooter,
+          vector spike,
+          vector treasure,
+          Position trophy,
+          vector wall,
+          Position door_pos,
+          vector arrow);
 
     Position vec_to_pos(std::vector<int>);//converts vector to ge211 position
     void start_game(); //sets is_game_over to false
@@ -61,9 +62,11 @@ private:
     //char winner_;
     //int score;
 
+    vector coins;
+    vector treasure;
     vector spikes_;
     Rectangle all_positions_;
-    std::vector<int> trophy_;
+    Position trophy_;
     vector shooter_;
     Player player_;
     bool is_game_over = true;

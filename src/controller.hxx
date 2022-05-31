@@ -8,10 +8,15 @@
 class Controller : public ge211::Abstract_game
 {
 public:
-    Controller(Model::Rectangle all, Model::vector co,
-               Model::vector
-               sh,Model::vector sp,Model::vector tr, std::vector<int> trophy,
-               Model::vector wall, Model::Position door_pos, Model::vector);
+    Controller(Model::Rectangle all,
+               Model::vector coin,
+               Model::vector shooter,
+               Model::vector spike,
+               Model::vector treasure,
+               std::vector<int> trophy,
+               Model::vector wall,
+               Model::vector door_pos,
+               Model::vector arrow);
 
 protected:
     void draw(ge211::Sprite_set& set) override;

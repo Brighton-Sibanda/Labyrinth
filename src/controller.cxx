@@ -1,10 +1,15 @@
 #include "controller.hxx"
 
-Controller::Controller(Model::Rectangle all, Model::vector co,
-                       Model::vector sh,Model::vector sp,Model::vector tr,
-                       std::vector<int> trophy, Model::vector wall,
-                       Model::Position door, Model::vector arrow)
-        : model_(all, co, sh, sp, tr, trophy,wall, door, arrow),
+Controller::Controller(Model::Rectangle all,
+                       Model::vector coin,
+                       Model::vector shooter,
+                       Model::vector spike,
+                       Model::vector treasure,
+                       std::vector<int> trophy,
+                       Model::vector wall,
+                       Model::vector door,
+                       Model::vector arrow)
+        : model_(all, coin, shooter, spike, treasure, trophy,wall, door, arrow),
           view_(model_)
 
 {}
