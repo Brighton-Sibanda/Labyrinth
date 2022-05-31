@@ -48,7 +48,6 @@ Model::get_player(){
 std::vector<Game_element>
 Model::get_elements(Position pos){
     std::vector<Game_element> elements;
-    int i = 0;
     for (Position poss: arrows_){
         if (pos == poss){
             char name[6];
@@ -65,7 +64,7 @@ Model::get_elements(Position pos){
                                             pos_to_vec(Position {0, 0})));
         }
     }
-    for (Position poss: spikes_){
+    for (Position poss: coins){
         if (pos == poss){
             char name[5];
             strcpy(name, "coin");
@@ -209,7 +208,7 @@ Model::move(Dimensions dir){
     if (player_score - 25 == player_.get_score()){
         player_.set_pos(0,20);
         player_.set_velocity({0,0});
-        player_.set_acceleration(0);
+        player_.set_acceleration(1);
         }
     else {
         player_.set_pos(next.x, next.y);
