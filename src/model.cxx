@@ -28,9 +28,9 @@ Model::Model(vector_of_doors door,
 
 Shooter::Shooter(char type,ge211::Posn<int> pos,
                  std::vector<ge211::Posn<int>> arrows)
-                 :type(type),
-                 Pos(pos),
-                 arrows(arrows)
+        :type(type),
+         Pos(pos),
+         arrows(arrows)
 {}
 
 
@@ -165,7 +165,7 @@ Model::get_doors(){
 
 void
 Model::set_spikes(std::vector<Position> vec){
-     spikes_ = vec;
+    spikes_ = vec;
 }
 
 void
@@ -187,12 +187,12 @@ Model::set_treasure(std::vector<Position> vec) {
 
 void
 Model::set_shooter(std::vector<Shooter> vec){
-     shooter_ = vec;
+    shooter_ = vec;
 }
 
 void
 Model::set_wall(std::vector<Position> vec){
-     wall_ = vec;
+    wall_ = vec;
 }
 
 void
@@ -204,12 +204,12 @@ Model::set_game_over(){
 ///////////////////////
 bool
 Model::player_against_wall(Position pos){
-   for (Position poss: wall_){
-       if (poss == pos){
-           return true;
-       }
-   }
-   return false;
+    for (Position poss: wall_){
+        if (poss == pos){
+            return true;
+        }
+    }
+    return false;
 }
 ///////////////////////
 
@@ -259,6 +259,7 @@ void
 Model::on_frame(float dt){
     time_for_points -= dt;
     time_total += 1;
+    shoot();
     if (player_.get_health()==0){
         set_game_over();
     }
@@ -270,41 +271,78 @@ Model::change_to_stage_1() {
 
 }
 
+//main shoot function
 void
 Model::shoot(){
-
     for (Shooter shooterr : shooter_){
         if (shooterr.type == 'u'){
-            for (Position &pos: shooterr.arrows){
-                pos = {pos.x, pos.y - 1};
-            }
-            if (time_total % 3 == 1){
-
-            shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
-                                                       - 1});}
+            shoot_up(shooterr);
         }
         else if (shooterr.type == 'd'){
-            for (Position &pos: shooterr.arrows){
-                pos = {pos.x, pos.y + 1};
-            }
-            if (time_total % 3 == 1){
-            shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
-                                                       +1});}
+            shoot_down(shooterr);
         }
         else if (shooterr.type == 'l'){
-            for (Position &pos: shooterr.arrows){
-                pos = {pos.x - 1, pos.y};
-            }
-            if (time_total % 3 == 1){
-            shooterr.arrows.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});}
+            shoot_left(shooterr);
         }
         else if (shooterr.type == 'r'){
-            for (Position &pos: shooterr.arrows){
-                pos = {pos.x + 1, pos.y};
-            }
-            if (time_total % 3 == 1){
-            shooterr.arrows.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});}
+            shoot_right(shooterr);
         }
     }
 }
+
+//Helper functions for shoot
+void
+Model::shoot_up(Shooter shooterr){
+    for (Position &pos: shooterr.arrows){
+        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                          pos));
+        pos = {pos.x, pos.y - 1};
+    }
+    if (time_total % 3 == 1){
+
+        shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
+                                                   - 1});
+        arrows_.push_back({shooterr.Pos.x, shooterr.Pos.y
+                                           - 1});
+    }
+}
+
+void
+Model::shoot_down(Shooter shooterr){
+    for (Position &pos: shooterr.arrows){
+        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                          pos));
+        pos = {pos.x, pos.y + 1};
+    }
+    if (time_total % 3 == 1){
+        shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
+                                                   +1});
+        arrows_.push_back({shooterr.Pos.x, shooterr.Pos.y
+                                           +1});}
+}
+void
+Model::shoot_left(Shooter shooterr){
+    for (Position &pos: shooterr.arrows){
+        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                          pos));
+        pos = {pos.x - 1, pos.y};
+    }
+    if (time_total % 3 == 1){
+        shooterr.arrows.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});
+        arrows_.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});}
+}
+
+void
+Model::shoot_right(Shooter shooterr){
+    for (Position &pos: shooterr.arrows){
+        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                          pos));
+        pos = {pos.x + 1, pos.y};
+    }
+    if (time_total % 3 == 1){
+        shooterr.arrows.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});
+        arrows_.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});
+    }
+}
+
 

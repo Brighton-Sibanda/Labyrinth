@@ -65,6 +65,10 @@ public:
     void change_to_stage_1();//changes the attributes of model to the next grid
     int model_state = 0;
     void shoot();//shoot arrows in a straight line
+    void shoot_up(Shooter);
+    void shoot_down(Shooter);
+    void shoot_left(Shooter);
+    void shoot_right(Shooter);
 
 private:
     //char board_[3][3];
