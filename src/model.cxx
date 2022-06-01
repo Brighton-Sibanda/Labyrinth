@@ -106,6 +106,12 @@ Model::get_spikes() {
     return spikes_;
 }
 
+Model::Rectangle
+Model::get_all() const
+{
+    return all_positions_;
+}
+
 void
 Model::apply_elements(Position pos){
     std::vector<Game_element> elements = Model::get_elements(pos);

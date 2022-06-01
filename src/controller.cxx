@@ -18,7 +18,7 @@ Controller::Controller(Model::vector_of_doors door,
 void
 Controller::draw(ge211::Sprite_set& set)
 {
-    view_.draw(set);
+    view_.draw(set, );
 }
 
 

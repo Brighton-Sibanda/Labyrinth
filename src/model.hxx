@@ -69,6 +69,7 @@ public:
     void shoot_down(Shooter);
     void shoot_left(Shooter);
     void shoot_right(Shooter);
+    Rectangle get_all() const;
 
 private:
     //char board_[3][3];
