@@ -5,7 +5,7 @@
 Model::Model(vector_of_doors door,
              Rectangle all,
              vector coins,
-             vector shooters,
+             std::vector<Shooter> shooters,
              vector spikes,
              vector treasures,
              Position trophy,
@@ -25,6 +25,15 @@ Model::Model(vector_of_doors door,
 {
     time_total =0;
 }
+
+Shooter::Shooter(char type,ge211::Posn<int> pos,
+                 std::vector<ge211::Posn<int>> arrows)
+                 :type(type),
+                 Pos(pos),
+                 arrows(arrows)
+{}
+
+
 
 // Especially for the player velocity
 Model::Position
@@ -87,7 +96,7 @@ Model::get_elements(Position pos){
     return elements;
 }
 
-std::vector<Model::Position>
+std::vector<Shooter>
 Model::get_shooters() {
     return shooter_;
 }
@@ -177,7 +186,7 @@ Model::set_treasure(std::vector<Position> vec) {
 }
 
 void
-Model::set_shooter(std::vector<Position> vec){
+Model::set_shooter(std::vector<Shooter> vec){
      shooter_ = vec;
 }
 
@@ -213,9 +222,9 @@ Model::move(Dimensions dir){
     Position current = vec_to_pos(player_.get_position());
     Position next = {current.x + dir.x, current.y + dir.y};
 
-    // Checks all elements that exist in the player's position
+    // applies all elements in the position the player is moving into
     apply_elements(next);
-    // Sets to new position
+    // returns if the player got kicked to the starting position
     if(player_.get_position() == pos_to_vec({1, 8})) {
         return true;
     }
@@ -262,31 +271,40 @@ Model::change_to_stage_1() {
 }
 
 void
-Model::change_to_stage_0(){
-
-}
-
-void
 Model::shoot(){
-    if (time_total % 3 == 1){
-        return;
-    }
-    if (arrows_.empty()){
-        arrows_.push_back({shooter_[0].x + 1, shooter_[0].y});
-    }
-    //add functionality for vertical shooters
-    else {
-        for (Position pos: arrows_){
-            Position next = {pos.x + 1, pos.y};
-            arrows_.erase(arrows_.begin() + get_element_index(arrows_, pos));
-            arrows_.push_back(next);
-            for (Position pos_wall: wall_){
-                if (pos_wall == next){
-                    arrows_.pop_back();
-                }
-            }
 
+    for (Shooter shooterr : shooter_){
+        if (shooterr.type == 'u'){
+            for (Position &pos: shooterr.arrows){
+                pos = {pos.x, pos.y - 1};
+            }
+            if (time_total % 3 == 1){
+
+            shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
+                                                       - 1});}
         }
-        arrows_.push_back({shooter_[0].x + 1, shooter_[0].y});
+        else if (shooterr.type == 'd'){
+            for (Position &pos: shooterr.arrows){
+                pos = {pos.x, pos.y + 1};
+            }
+            if (time_total % 3 == 1){
+            shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
+                                                       +1});}
+        }
+        else if (shooterr.type == 'l'){
+            for (Position &pos: shooterr.arrows){
+                pos = {pos.x - 1, pos.y};
+            }
+            if (time_total % 3 == 1){
+            shooterr.arrows.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});}
+        }
+        else if (shooterr.type == 'r'){
+            for (Position &pos: shooterr.arrows){
+                pos = {pos.x + 1, pos.y};
+            }
+            if (time_total % 3 == 1){
+            shooterr.arrows.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});}
+        }
     }
 }
+

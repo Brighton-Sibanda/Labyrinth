@@ -7,6 +7,17 @@
 #include <vector>
 
 
+
+class Shooter{
+public:
+    Shooter(char,ge211::Posn<int>, std::vector<ge211::Posn<int>> );
+    char type;
+    ge211::Posn<int> Pos;
+    std::vector<ge211::Posn<int>> arrows;
+};
+
+
+
 class Model
 {
 
@@ -20,7 +31,7 @@ public:
     Model(vector_of_doors door,
           Rectangle all,
           vector coin,
-          vector shooter,
+          std::vector<Shooter> shooter,
           vector spike,
           vector treasure,
           Position trophy,
@@ -32,7 +43,7 @@ public:
     Player get_player(); //returns the player object of the game
     std::vector<Game_element> get_elements(Position pos);//returns a vector
     // containing all the game elements at a position
-    std::vector<Position> get_shooters();//returns the vector of shooter
+    std::vector<Shooter> get_shooters();//returns the vector of shooter
     // positions
     std::vector<Position> get_spikes();//returns a vector of all spike positions
     void apply_elements(Position);//executes all game elements onto the player
@@ -44,20 +55,15 @@ public:
     void set_doors(vector_of_doors);//sets the door position
     void set_coins(std::vector<Position>);//sets the coin positions
     void set_treasure(std::vector<Position>);//sets the treasure positions
-    void set_shooter(std::vector<Position>);//sets the shooter positions
+    void set_shooter(std::vector<Shooter>);//sets the shooter positions
     void set_wall(std::vector<Position>);//sets the wall positions
     std::vector<int> pos_to_vec(Position);//converts ge211 position into vector
     void set_game_over();//ends the game
     bool player_against_wall(Position pos);//checks whether player can slide up
     bool move(Dimensions dir);//moves the player in the given direction
     void on_frame(float);//advances the game by a certain amount of frames
-    void change_to_stage_1();//changes the attributes of model to the
-    // hidden
-    // place
-    void change_to_stage_0();//reverts model back to its original
-    // attributes
+    void change_to_stage_1();//changes the attributes of model to the next grid
     int model_state = 0;
-    vector_of_doors doors;
     void shoot();//shoot arrows in a straight line
 
 private:
@@ -65,12 +71,13 @@ private:
     //char winner_;
     //int score;
 
+    vector_of_doors doors;
     vector coins;
     vector treasure;
     vector spikes_;
     Rectangle all_positions_;
     Position trophy_;
-    vector shooter_;
+    std::vector<Shooter> shooter_;
     Player player_;
     bool is_game_over = true;
     vector wall_;
@@ -79,3 +86,4 @@ private:
     int time_total;
 
 };
+

@@ -3,7 +3,7 @@
 Controller::Controller(Model::vector_of_doors door,
                        Model::Rectangle all,
                        Model::vector coin,
-                       Model::vector shooter,
+                       std::vector<Shooter> shooter,
                        Model::vector spike,
                        Model::vector treasure,
                        Model::Position trophy,
