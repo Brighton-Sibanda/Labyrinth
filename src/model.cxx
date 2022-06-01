@@ -2,16 +2,17 @@
 
 
 
-Model::Model(Rectangle all,
+Model::Model(vector_of_doors door,
+             Rectangle all,
              vector coins,
              vector shooters,
              vector spikes,
              vector treasures,
              Position trophy,
              vector wall,
-             Position door,
              vector arrow)
-        :coins(coins),
+        :doors(door),
+         coins(coins),
          treasure(treasures),
          spikes_(spikes),
          all_positions_(all),
@@ -19,7 +20,6 @@ Model::Model(Rectangle all,
          shooter_(shooters),
          player_(),
          wall_(wall),
-         door_pos(door),
          time_for_points(300),
          arrows_(arrow)
 {
@@ -58,36 +58,28 @@ Model::get_elements(Position pos){
     // If there is an arrow in a given position
     for (Position poss : arrows_){
         if (pos == poss){
-            char name[6];
-            strcpy(name, "arrow");
-            elements.push_back(Game_element(true, name, pos_to_vec(pos),-5,
-                                            pos_to_vec(Position {10, 10}) ));
+            elements.push_back(Game_element(true, 'a', pos_to_vec(pos),-5,
+                                            {10, 10} ));
         }
     }
     // If there are spikes in a given position
     for (Position poss: spikes_){
         if (pos == poss){
-            char name[6];
-            strcpy(name, "spike");
-            elements.push_back(Game_element(true,name , pos_to_vec(pos),-25,
-                                            pos_to_vec(Position {0, 0})));
+            elements.push_back(Game_element(true,'s' , pos_to_vec(pos),-25,
+                                            {0, 0}));
         }
     }
     // If there is a coin in a given position
     for (Position poss: coins){
         if (pos == poss){
-            char name[5];
-            strcpy(name, "coin");
-            elements.push_back(Game_element(true, name, pos_to_vec(pos),10,
-                                            pos_to_vec(Position {0, 0}) ));
+            elements.push_back(Game_element(true, 'c', pos_to_vec(pos),10,
+                                            {0, 0} ));
         }
     }
     // If there is a treasure chest in a given position
     for (Position poss: treasure){
         if (pos == poss){
-            char name[9];
-            strcpy(name, "treasure");
-            elements.push_back(Game_element(true, name,
+            elements.push_back(Game_element(true, 't',
                                             pos_to_vec(pos),100,{0, 0}));
         }
     }
@@ -109,17 +101,17 @@ void
 Model::apply_elements(Position pos){
     std::vector<Game_element> elements = Model::get_elements(pos);
     for (Game_element element: elements){
-        if (strcmp (element.type, "coin") ==0){
+        if (element.type == 'c'){
             int index = Model::get_element_index(coins, pos);
             coins.erase(coins.begin() + index);
             player_.set_score(10);
         }
-        else if (strcmp (element.type, "treasure") == 0){
+        else if (element.type=='t'){
             int index = Model::get_element_index(treasure, pos);
             treasure.erase(treasure.begin() + index);
             player_.set_score(100);
         }
-        else if (strcmp (element.type, "arrow") == 0){
+        else if (element.type== 'a'){
             int index = Model::get_element_index(arrows_, pos);
             arrows_.erase(arrows_.begin() + index);
             player_.set_score(-10);
@@ -127,16 +119,16 @@ Model::apply_elements(Position pos){
             // Respawn
             player_.set_pos(1, 8);
             player_.set_velocity({0,0});
-            player_.set_acceleration(0);
+            player_.set_acceleration({0,0});
 
         }
-        else if (strcmp (element.type, "spike") == 0){
+        else if (element.type == 's'){
             player_.set_score(-25);
             player_.reduce_health();
             // Respawn
             player_.set_pos(1, 8);
             player_.set_velocity({0,0});
-            player_.set_acceleration(0);
+            player_.set_acceleration({0,0});
         }
 
     }
@@ -155,24 +147,23 @@ Model::get_element_index(std::vector<Position> elements, Position pos){
     return i;
 }
 
-///////////////////////
-Model::Position
-Model::get_door_pos(){
-    return door_pos;
+
+Model::vector_of_doors
+Model::get_doors(){
+    return doors;
 }
-///////////////////////
+
 
 void
 Model::set_spikes(std::vector<Position> vec){
      spikes_ = vec;
 }
 
-///////////////////////
 void
-Model::set_door_pos(Model::Position pos){
-    door_pos = pos;
+Model::set_doors(Model::vector_of_doors doorss){
+    doors = doorss;
 }
-///////////////////////
+
 
 
 void
@@ -240,14 +231,17 @@ Model::move(Dimensions dir){
     }
 
     // Changes room/grid if the player reaches a door
-    if (vec_to_pos(player_.get_position()) == door_pos && model_state == 0){
-        Model::change_to_stage_1();
-        model_state = 1;
-    }
-    else if (vec_to_pos(player_.get_position()) == door_pos && model_state ==
-    1){
-        Model::change_to_stage_0();
-        model_state = 0;
+    for (Door door: doors){
+        if (door.door_pos == player_.get_position()){
+            if (door.changes_model_state){
+                change_to_stage_1();
+                player_.set_pos(door.destination[0], door.destination[1]);
+                model_state = 1;
+            }
+            else{
+                player_.set_pos(door.destination[0], door.destination[1]);
+            }
+        }
     }
     return true;
 }
@@ -274,12 +268,13 @@ Model::change_to_stage_0(){
 
 void
 Model::shoot(){
-    if (time_total % 2 == 1){
+    if (time_total % 3 == 1){
         return;
     }
     if (arrows_.empty()){
         arrows_.push_back({shooter_[0].x + 1, shooter_[0].y});
     }
+    //add functionality for vertical shooters
     else {
         for (Position pos: arrows_){
             Position next = {pos.x + 1, pos.y};

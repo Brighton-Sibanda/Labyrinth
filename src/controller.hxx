@@ -8,14 +8,14 @@
 class Controller : public ge211::Abstract_game
 {
 public:
-    Controller(Model::Rectangle all,
+    Controller(Model::vector_of_doors door,
+               Model::Rectangle all,
                Model::vector coin,
                Model::vector shooter,
                Model::vector spike,
                Model::vector treasure,
-               std::vector<int> trophy,
+               Model::Position trophy,
                Model::vector wall,
-               Model::vector door_pos,
                Model::vector arrow);
 
 protected:

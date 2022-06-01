@@ -5,14 +5,14 @@
 int
 main()
 {
-    Controller(Model::Rectangle {},     // all
+    Controller(Model::vector_of_doors {},
+               Model::Rectangle {},     // all
                Model::vector {},        // coin
                Model::vector {},         // shooter
                Model::vector {},        // spike
                Model::vector {},        // treasure
                Model::Position {0,0},  //trophy
                Model::vector{},         // wall
-               Model::Position {0,0},   // door_pos
                Model::vector {}).run();       // arrow
     return 0;
 }

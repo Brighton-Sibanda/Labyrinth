@@ -8,16 +8,17 @@ include(.cs211/cmake/CMakeLists.txt)
 
 # TODO: PUT ADDITIONAL MODEL .cxx FILES IN THIS LIST:
 set(MODEL_SRC
-        src/model.cxx)
+        src/model.cxx
+        src/game_elements.cxx
+        src/player.cxx
+        src/door.cxx)
 
 # TODO: PUT ADDITIONAL NON-MODEL (UI) .cxx FILES IN THIS LIST:
 add_program(${GAME_EXE}
         ${MODEL_SRC}
         src/view.cxx
         src/controller.cxx
-        src/main.cxx
-        src/player.cxx
-        src/game_elements.cxx)
+        src/main.cxx)
 target_link_libraries(${GAME_EXE} ge211)
 
 add_test_program(model_test

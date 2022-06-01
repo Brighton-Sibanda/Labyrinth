@@ -3,6 +3,7 @@
 #include <ge211.hxx>
 #include "player.hxx"
 #include "game_elements.hxx"
+#include "door.hxx"
 #include <vector>
 
 
@@ -14,15 +15,16 @@ public:
     using vector = std::vector<Position>;
     using Rectangle = ge211::Rect<int>;
     using Dimensions = ge211::Posn<int>;
+    using vector_of_doors = std::vector<Door>;
 
-    Model(Rectangle all,
+    Model(vector_of_doors door,
+          Rectangle all,
           vector coin,
           vector shooter,
           vector spike,
           vector treasure,
           Position trophy,
           vector wall,
-          Position door_pos,
           vector arrow);
 
     Position vec_to_pos(std::vector<int>);//converts vector to ge211 position
@@ -37,9 +39,9 @@ public:
     // if the player is in that position
     int get_element_index(std::vector<Position>, Position);//helper
     // for apply elements gets the index of a position in a position vector
-    Position get_door_pos();//gets the door's position in this model
+    vector_of_doors get_doors();//gets the door's position in this model
     void set_spikes(std::vector<Position>);//sets the spikes vector
-    void set_door_pos(Position);//sets the door position
+    void set_doors(vector_of_doors);//sets the door position
     void set_coins(std::vector<Position>);//sets the coin positions
     void set_treasure(std::vector<Position>);//sets the treasure positions
     void set_shooter(std::vector<Position>);//sets the shooter positions
@@ -55,6 +57,7 @@ public:
     void change_to_stage_0();//reverts model back to its original
     // attributes
     int model_state = 0;
+    vector_of_doors doors;
     void shoot();//shoot arrows in a straight line
 
 private:
@@ -71,7 +74,6 @@ private:
     Player player_;
     bool is_game_over = true;
     vector wall_;
-    Position door_pos;
     float time_for_points;
     vector arrows_;
     int time_total;

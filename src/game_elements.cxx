@@ -1,7 +1,7 @@
 #include "game_elements.hxx"
 
 Game_element::Game_element(bool active,
-                           char* type,
+                           char type,
                            std::vector<int> pos,
                            int points,
                            //char orientation,

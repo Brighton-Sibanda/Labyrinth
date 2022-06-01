@@ -2,12 +2,11 @@
 // Created by Brighton Sibanda on 5/30/22.
 //
 
-#ifndef GAME_PLAYER_HXX
-#define GAME_PLAYER_HXX
+// #ifndef GAME_PLAYER_HXX
+// #define GAME_PLAYER_HXX
 
 #include <stdio.h>
 #include <vector>
-
 
 using namespace std;
 
@@ -39,4 +38,4 @@ private:
 };
 
 
-#endif //GAME_PLAYER_HXX
+// #endif //GAME_PLAYER_HXX
