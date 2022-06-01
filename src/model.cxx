@@ -297,6 +297,7 @@ Model::shoot_up(Shooter shooterr){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
         pos = {pos.x, pos.y - 1};
+        arrows_.push_back(pos);
     }
     if (time_total % 3 == 1){
 
@@ -313,6 +314,7 @@ Model::shoot_down(Shooter shooterr){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
         pos = {pos.x, pos.y + 1};
+        arrows_.push_back(pos);
     }
     if (time_total % 3 == 1){
         shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
@@ -326,7 +328,8 @@ Model::shoot_left(Shooter shooterr){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
         pos = {pos.x - 1, pos.y};
-    }
+        arrows_.push_back(pos);}
+
     if (time_total % 3 == 1){
         shooterr.arrows.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});
         arrows_.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});}
@@ -338,6 +341,7 @@ Model::shoot_right(Shooter shooterr){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
         pos = {pos.x + 1, pos.y};
+        arrows_.push_back(pos);
     }
     if (time_total % 3 == 1){
         shooterr.arrows.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});
