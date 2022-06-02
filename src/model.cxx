@@ -137,7 +137,6 @@ Model::apply_elements(Position pos){
             player_.set_velocity({0,0});
             player_.set_acceleration({0,0});
         }
-
     }
 }
 
@@ -213,17 +212,23 @@ Model::player_against_wall(Position pos){
 
 bool
 Model::move(){
-    if (player_.get_health()==0 || is_game_over){
+
+    // Checks if the game is over
+    if (player_.get_health() == 0 || is_game_over){
         set_game_over();
         return false;
     }
+
+    // Player overlaps with an obstacle
     if (!good_position(vec_to_pos(player_.get_position())) || is_game_over){
         player_.set_velocity({0,0});
-        return true;}
+        return true;
+    }
+
     int health = player_.get_health();
     Position current = vec_to_pos(player_.get_position());
-    Position next = {current.x + player_.get_velocity()[0], current.y +
-                                                            player_.get_velocity()[1]};
+    Position next = {current.x + player_.get_velocity()[0],
+                     current.y + player_.get_velocity()[1]};
 
     // applies all elements in the position the player is moving into
     apply_elements(next);
@@ -231,6 +236,7 @@ Model::move(){
     if (player_.get_health() < health){
         return true;
     }
+
     // Sets player's new position and velocity
     if (good_position(next)){
         player_.set_pos(next.x, next.y);
@@ -419,8 +425,8 @@ Model::get_treasure() const{
 
 bool
 Model::good_position(Position pos){
-    bool grids = 0 <= pos.x && pos.x < 12 &&
-                 0 <= pos.y && pos.y < 9;
+    bool grids = 0 <= pos.x && pos.x < 12 * 60 &&
+                 0 <= pos.y && pos.y < 9 * 60;
     bool wall = true;
     for (Position poss: wall_){
         if (pos == poss){

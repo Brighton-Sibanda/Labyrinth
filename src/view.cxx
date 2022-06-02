@@ -25,9 +25,11 @@ View::draw(ge211::Sprite_set& set) {
             set.add_sprite(gen_sprite, {j * grid_size, i * grid_size}, 0);
         }
     }
+    // Player Sprite
     set.add_sprite(player_sprite,
-                   board_to_screen(model_.vec_to_pos(model_.get_player()
-                   .get_position())), 10);
+                   model_.vec_to_pos(model_.get_player().get_position()),
+                   10);
+
     for (Model::Position pos: model_.get_wall()){
         set.add_sprite(wall_sprite, board_to_screen(pos), 2);
     }

@@ -5,7 +5,7 @@
 #include "player.hxx"
 
 Player::Player()
-    : current_pos({1,8}),
+    : current_pos({1 * 60, 8 * 60}), // grid_size
       health(4),
       score(0),
       velocity({0,0}),
