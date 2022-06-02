@@ -50,9 +50,9 @@ public:
     // if the player is in that position
     int get_element_index(std::vector<Position>, Position);//helper
     // for apply elements gets the index of a position in a position vector
-    vector_of_doors get_doors();//gets the door's position in this model
+    vector_of_doors get_doors();//gets the doors in this model
     void set_spikes(std::vector<Position>);//sets the spikes vector
-    void set_doors(vector_of_doors);//sets the door position
+    void set_doors(vector_of_doors);//sets the doors
     void set_coins(std::vector<Position>);//sets the coin positions
     void set_treasure(std::vector<Position>);//sets the treasure positions
     void set_shooter(std::vector<Shooter>);//sets the shooter positions
