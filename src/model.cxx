@@ -3,7 +3,7 @@
 
 
 Model::Model(vector_of_doors door,
-             Rectangle all,
+             vector all,
              vector coins,
              std::vector<Shooter> shooters,
              vector spikes,
@@ -106,7 +106,7 @@ Model::get_spikes() {
     return spikes_;
 }
 
-Model::Rectangle
+Model::vector
 Model::get_all() const
 {
     return all_positions_;

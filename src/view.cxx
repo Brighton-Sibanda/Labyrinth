@@ -18,3 +18,15 @@ View::draw(ge211::Sprite_set& set)
     }
 
 }
+
+std::string
+View::initial_window_title() const
+{
+    return "Labyrinth";
+}
+
+ge211::Dims<int>
+View::initial_window_dimensions() const{
+    return grid_size * ge211::Dims<int> {1024,780};
+}
+

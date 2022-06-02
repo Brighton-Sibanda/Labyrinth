@@ -29,7 +29,7 @@ public:
     using vector_of_doors = std::vector<Door>;
 
     Model(vector_of_doors door,
-          Rectangle all,
+          vector all,
           vector coin,
           std::vector<Shooter> shooter,
           vector spike,
@@ -69,7 +69,7 @@ public:
     void shoot_down(Shooter);
     void shoot_left(Shooter);
     void shoot_right(Shooter);
-    Rectangle get_all() const;
+    vector get_all() const;
 
 private:
     //char board_[3][3];
@@ -80,7 +80,7 @@ private:
     vector coins;
     vector treasure;
     vector spikes_;
-    Rectangle all_positions_;
+    vector all_positions_;
     Position trophy_;
     std::vector<Shooter> shooter_;
     Player player_;

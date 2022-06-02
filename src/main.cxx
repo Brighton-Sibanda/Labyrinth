@@ -6,7 +6,7 @@ int
 main()
 {
     Controller(Model::vector_of_doors {{true, {2,1}, {1,8}}},
-               Model::Rectangle {0,0,12,9},     // all
+               Model::vector {{3,3}},     // all
                Model::vector {{4,7},{5,7},{6,7},{7,7}
                ,{8,7},{4,8},{5,8},{6,8},{7,8},{8,8}
                        ,{10,3},{11,3},{10,4},{11,4},{10,5}
