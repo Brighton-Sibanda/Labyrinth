@@ -17,4 +17,12 @@ private:
     Model const& model_;
     ge211::Rectangle_sprite gen_sprite;
     ge211::Rectangle_sprite player_sprite;
+    ge211::Rectangle_sprite wall_sprite;
+    ge211::Rectangle_sprite door_sprite;
+    ge211::Rectangle_sprite spike_sprite;
+    ge211::Rectangle_sprite treasure_sprite;
+    ge211::Rectangle_sprite trophy_sprite;
+    ge211::Rectangle_sprite arrow_sprite;
+    ge211::Circle_sprite coin_sprite;
+
 };

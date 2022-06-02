@@ -5,7 +5,7 @@
 #include "player.hxx"
 
 Player::Player()
-    : current_pos({1,1}),
+    : current_pos({1,8}),
       health(4),
       score(0),
       velocity({0,0}),

@@ -97,12 +97,12 @@ Model::get_elements(Position pos){
 }
 
 std::vector<Shooter>
-Model::get_shooters() {
+Model::get_shooters() const {
     return shooter_;
 }
 
 std::vector<Model::Position>
-Model::get_spikes() {
+Model::get_spikes() const {
     return spikes_;
 }
 
@@ -164,7 +164,7 @@ Model::get_element_index(std::vector<Position> elements, Position pos){
 
 
 Model::vector_of_doors
-Model::get_doors() {
+Model::get_doors() const{
     return doors;
 }
 
@@ -355,4 +355,19 @@ Model::shoot_right(Shooter shooterr){
     }
 }
 
+
+Model::vector
+Model::get_wall() const{
+    return wall_;
+}
+
+Model::vector
+Model::get_coins() const{
+    return coins;
+}
+
+Model::vector
+Model::get_treasure() const{
+    return treasure;
+}
 

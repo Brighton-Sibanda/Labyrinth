@@ -45,14 +45,15 @@ public:
     // returns a vector
     std::vector<Game_element> get_elements(Position pos);
     // containing all the game elements at a position
-    std::vector<Shooter> get_shooters();//returns the vector of shooter
+    std::vector<Shooter> get_shooters() const;//returns the vector of shooter
     // positions
-    std::vector<Position> get_spikes();//returns a vector of all spike positions
+    std::vector<Position> get_spikes() const;//returns a vector of all spike
+    // positions
     void apply_elements(Position);//executes all game elements onto the player
     // if the player is in that position
     int get_element_index(std::vector<Position>, Position);//helper
     // for apply elements gets the index of a position in a position vector
-    vector_of_doors get_doors();//gets the doors in this model
+    vector_of_doors get_doors() const;//gets the doors in this model
     void set_spikes(std::vector<Position>);//sets the spikes vector
     void set_doors(vector_of_doors);//sets the doors
     void set_coins(std::vector<Position>);//sets the coin positions
@@ -72,6 +73,9 @@ public:
     void shoot_left(Shooter);
     void shoot_right(Shooter);
     vector get_all() const;
+    vector get_wall() const;
+    vector get_coins() const;
+    vector get_treasure() const;
 
 private:
     //char board_[3][3];
