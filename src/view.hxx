@@ -16,5 +16,4 @@ public:
 private:
     Model const& model_;
     ge211::Rectangle_sprite gen_sprite;
-    ge211::Rectangle_sprite player_sprite;
 };
