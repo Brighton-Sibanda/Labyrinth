@@ -22,12 +22,10 @@ class Model
 public:
     using Position = ge211::Posn<int>;
     using vector = std::vector<Position>;
-    using Rectangle = ge211::Rect<int>;
     using Dimensions = ge211::Posn<int>;
     using vector_of_doors = std::vector<Door>;
 
     Model(vector_of_doors door,
-          vector all,
           vector coin,
           std::vector<Shooter> shooter,
           vector spike,
@@ -72,7 +70,6 @@ public:
     void shoot_down(Shooter);
     void shoot_left(Shooter);
     void shoot_right(Shooter);
-    vector get_all() const;
     vector get_wall() const;
     vector get_coins() const;
     vector get_treasure() const;
@@ -86,7 +83,6 @@ private:
     vector coins;
     vector treasure;
     vector spikes_;
-    vector all_positions_;
     Position trophy_;
     std::vector<Shooter> shooter_;
     Player player_;

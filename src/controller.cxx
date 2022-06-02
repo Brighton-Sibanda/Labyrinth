@@ -1,7 +1,6 @@
 #include "controller.hxx"
 
 Controller::Controller(Model::vector_of_doors door,
-                       Model::vector all,
                        Model::vector coin,
                        std::vector<Shooter> shooter,
                        Model::vector spike,
@@ -9,7 +8,7 @@ Controller::Controller(Model::vector_of_doors door,
                        Model::Position trophy,
                        Model::vector wall,
                        Model::vector arrow)
-        : model_(door,all, coin, shooter, spike, treasure, trophy,wall,
+        : model_(door, coin, shooter, spike, treasure, trophy,wall,
                  arrow),
           view_(model_)
 

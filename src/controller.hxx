@@ -9,7 +9,6 @@ class Controller : public ge211::Abstract_game
 {
 public:
     Controller(Model::vector_of_doors door,
-               Model::vector all,
                Model::vector coin,
                std::vector<Shooter> shooter,
                Model::vector spike,

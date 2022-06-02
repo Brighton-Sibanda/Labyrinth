@@ -3,7 +3,6 @@
 
 
 Model::Model(vector_of_doors door,
-             vector all,
              vector coins,
              std::vector<Shooter> shooters,
              vector spikes,
@@ -15,7 +14,6 @@ Model::Model(vector_of_doors door,
          coins(coins),
          treasure(treasures),
          spikes_(spikes),
-         all_positions_(all),
          trophy_(trophy),
          shooter_(shooters),
          player_(),
@@ -106,11 +104,6 @@ Model::get_spikes() const {
     return spikes_;
 }
 
-Model::vector
-Model::get_all() const
-{
-    return all_positions_;
-}
 
 void
 Model::apply_elements(Position pos){
