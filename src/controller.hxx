@@ -24,6 +24,8 @@ protected:
     void draw(ge211::Sprite_set& set) override;
     void on_frame(double dt) override;
     void on_key(ge211::Key key) override;
+    void on_key_up(ge211::Key key) override;
+
 
 
 private:
