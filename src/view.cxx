@@ -26,6 +26,6 @@ View::initial_window_title() const
 
 ge211::Dims<int>
 View::initial_window_dimensions() const{
-    return ge211::Dims<int> {1024,780};
+    return ge211::Dims<int> {12 * grid_size,9 * grid_size};
 }
 
