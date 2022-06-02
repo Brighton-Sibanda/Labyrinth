@@ -12,7 +12,6 @@ View::View(Model const& model)
 void
 View::draw(ge211::Sprite_set& set)
 {
-    // This needs to do something!
     for (Model::Position pos: model_.get_all() ){
         set.add_sprite(gen_sprite, {pos.x * grid_size, pos.y * grid_size});
     }
@@ -27,6 +26,6 @@ View::initial_window_title() const
 
 ge211::Dims<int>
 View::initial_window_dimensions() const{
-    return grid_size * ge211::Dims<int> {1024,780};
+    return ge211::Dims<int> {1024,780};
 }
 

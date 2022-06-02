@@ -16,8 +16,6 @@ public:
     std::vector<ge211::Posn<int>> arrows;
 };
 
-
-
 class Model
 {
 

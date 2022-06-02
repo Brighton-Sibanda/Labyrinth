@@ -67,7 +67,7 @@ Model::get_elements(Position pos){
     // If there is an arrow in a given position
     for (Position poss : arrows_){
         if (pos == poss){
-            elements.push_back(Game_element(true, 'a', pos_to_vec(pos),-5,
+            elements.push_back(Game_element(true, 'a', pos_to_vec(pos), -5,
                                             {10, 10} ));
         }
     }
@@ -164,25 +164,25 @@ Model::get_element_index(std::vector<Position> elements, Position pos){
 
 
 Model::vector_of_doors
-Model::get_doors(){
+Model::get_doors() {
     return doors;
 }
 
 
 void
-Model::set_spikes(std::vector<Position> vec){
+Model::set_spikes(std::vector<Position> vec) {
     spikes_ = vec;
 }
 
 void
-Model::set_doors(Model::vector_of_doors doorss){
+Model::set_doors(Model::vector_of_doors doorss) {
     doors = doorss;
 }
 
 
 
 void
-Model::set_coins(std::vector<Model::Position> vec){
+Model::set_coins(std::vector<Model::Position> vec) {
     coins = vec;
 }
 
@@ -192,17 +192,17 @@ Model::set_treasure(std::vector<Position> vec) {
 }
 
 void
-Model::set_shooter(std::vector<Shooter> vec){
+Model::set_shooter(std::vector<Shooter> vec) {
     shooter_ = vec;
 }
 
 void
-Model::set_wall(std::vector<Position> vec){
+Model::set_wall(std::vector<Position> vec) {
     wall_ = vec;
 }
 
 void
-Model::set_game_over(){
+Model::set_game_over() {
     is_game_over = true;
     player_.set_score(time_for_points);
 }
@@ -210,7 +210,7 @@ Model::set_game_over(){
 ///////////////////////
 bool
 Model::player_against_wall(Position pos){
-    for (Position poss: wall_){
+    for (Position poss : wall_){
         if (poss == pos){
             return true;
         }

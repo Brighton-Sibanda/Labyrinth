@@ -14,10 +14,9 @@ class Player
 {
 public:
     Player(); //constructor
-    // health,
-    // velocity, current pos, score, acc
+    // health, velocity, current pos, score, acc
 
-    //Get functions and set functions for private members
+    // Get functions and set functions for private members
     std::vector<int> get_position();
     int get_health();
     float get_score();
