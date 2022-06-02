@@ -56,7 +56,7 @@ Model::start_game(){
 
 
 Player
-Model::get_player(){
+Model::get_player() const{
     return player_;
 }
 

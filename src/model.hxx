@@ -38,7 +38,7 @@ public:
 
     Position vec_to_pos(std::vector<int>);//converts vector to ge211 position
     void start_game(); //sets is_game_over to false
-    Player get_player(); //returns the player object of the game
+    Player get_player() const; //returns the player object of the game
     std::vector<Game_element> get_elements(Position pos);//returns a vector
     // containing all the game elements at a position
     std::vector<Shooter> get_shooters();//returns the vector of shooter
