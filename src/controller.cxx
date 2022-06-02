@@ -30,3 +30,30 @@ Controller::initial_window_dimensions() const {
     return view_.initial_window_dimensions();
 }
 
+void
+Controller::on_key(ge211::Key key)
+{
+     if (key == ge211::Key::code('d')) {
+         if (model_.good_position({model_.get_player().get_position()[0] + 1,
+                                   model_.get_player().get_position()[1]})){
+             model_.set_player_acc({1,0});
+    }}
+
+    if (key == ge211::Key::code('a')) {
+        if (model_.good_position({model_.get_player().get_position()[0] - 1,
+                                  model_.get_player().get_position()[1]}) ){
+            model_.set_player_acc({-1,0});
+        }}
+    if (key == ge211::Key::code('w')) {
+        if (model_.good_position({model_.get_player().get_position()[0],
+                                  model_.get_player().get_position()[1] - 1}) ){
+            model_.set_player_acc({0,-1});
+        }}
+    if (key == ge211::Key::code('s')) {
+        if (model_.good_position({model_.get_player().get_position()[0],
+                                  model_.get_player().get_position()[1]+1})){
+            model_.set_player_acc({0,1});
+        }}
+    model_.move();
+
+}

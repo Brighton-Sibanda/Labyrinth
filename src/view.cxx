@@ -8,7 +8,7 @@ View::View(Model const& model)
         : model_(model),
         gen_sprite({grid_size, grid_size}, {46, 0,0}),
         player_sprite({grid_size/2, grid_size}, {200, 100,120}),
-        wall_sprite({grid_size, grid_size}, {0, 100,0}),
+        wall_sprite({grid_size, grid_size}, {50,0 ,50}),
         door_sprite({grid_size/2, grid_size}, {100, 100,100}),
         spike_sprite({grid_size, grid_size/2}, {255, 255,0}),
         treasure_sprite({grid_size/3, grid_size/3}, {148, 0,211}),

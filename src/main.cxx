@@ -15,7 +15,7 @@ main()
                std::vector<Shooter> {{'r', {0,2},{}}},         // shooter
                Model::vector {},        // spike
                Model::vector {},        // treasure
-               Model::Position {3,4},  //trophy
+               Model::Position {1,9},  //trophy
                Model::vector{{0,0},{1,0},{2,0},{3,0}
                                   ,{4,0},{5,0},{6,0},{7,0}
                                   ,{8,0},{9,0},{10,0},{11,0}

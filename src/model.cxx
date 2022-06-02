@@ -41,22 +41,21 @@ Model::vec_to_pos(std::vector<int> vec) const {
 
 std::vector<int>
 Model::pos_to_vec(Position pos){
-    std::vector<int> poss;
-    poss[0] = pos.x;
-    poss[1] = pos.y;
+    std::vector<int> poss = {pos.x, pos.y};
     return poss;
 }
 
-void
-Model::start_game(){
-    is_game_over = false;
-}
+// void
+// Model::start_game(){
+//     is_game_over = false;
+// }
 
 
 Player
 Model::get_player() const {
     return player_;
 }
+
 
 
 std::vector<Game_element>
@@ -213,29 +212,36 @@ Model::player_against_wall(Position pos){
 ///////////////////////
 
 bool
-Model::move(Dimensions dir){
-
-    if (is_game_over){
+Model::move(){
+    if (player_.get_health()==0 || is_game_over){
+        set_game_over();
         return false;
     }
+    if (!good_position(vec_to_pos(player_.get_position())) || is_game_over){
+        player_.set_velocity({0,0});
+        return true;}
+    int health = player_.get_health();
     Position current = vec_to_pos(player_.get_position());
-    Position next = {current.x + dir.x, current.y + dir.y};
+    Position next = {current.x + player_.get_velocity()[0], current.y +
+                                                            player_.get_velocity()[1]};
 
     // applies all elements in the position the player is moving into
     apply_elements(next);
-    // returns if the player got kicked to the starting position
-    if(player_.get_position() == pos_to_vec({1, 8})) {
+
+    if (player_.get_health() < health){
         return true;
     }
     // Sets player's new position and velocity
-    player_.set_pos(next.x, next.y);
-    int x = player_.get_velocity()[0] + player_.get_acceleration()[0];
-    int y = player_.get_velocity()[1] + player_.get_acceleration()[1];
-    player_.set_velocity({x, y});
+    if (good_position(next)){
+        player_.set_pos(next.x, next.y);
+        int x = player_.get_velocity()[0] + player_.get_acceleration()[0];
+        int y = player_.get_velocity()[1] + player_.get_acceleration()[1];
+        player_.set_velocity({x, y});}
 
     // If the trophy is reached
     if (player_.get_position() == pos_to_vec(trophy_)) {
         set_game_over();
+        return true;
     }
 
     // Changes room/grid if the player reaches a door
@@ -251,17 +257,59 @@ Model::move(Dimensions dir){
             }
         }
     }
-    return true;
+
+    return false;
 }
 
 void
 Model::on_frame(float dt){
-    time_for_points -= dt;
-    time_total += 1;
+   if (is_game_over){
+       return;
+   }
+    time_for_points -= 1;
+    time_total += dt;
     shoot();
-    if (player_.get_health()==0){
-        set_game_over();
-    }
+    // if (!good_position(vec_to_pos(player_.get_position())) || is_game_over){
+    //     player_.set_velocity({0,0});
+    //     return;}
+    // int health = player_.get_health();
+    // Position current = vec_to_pos(player_.get_position());
+    // Position next = {current.x + player_.get_velocity()[0], current.y +
+    //                  player_.get_velocity()[1]};
+    //
+    // // applies all elements in the position the player is moving into
+    // apply_elements(next);
+    //
+    // if (player_.get_health() < health){
+    //     return;
+    // }
+    // // Sets player's new position and velocity
+    // if (good_position(next)){
+    //     player_.set_pos(next.x, next.y);
+    //     int x = player_.get_velocity()[0] + player_.get_acceleration()[0];
+    //     int y = player_.get_velocity()[1] + player_.get_acceleration()[1];
+    //     player_.set_velocity({x, y});}
+    //
+    // // If the trophy is reached
+    // if (player_.get_position() == pos_to_vec(trophy_)) {
+    //     set_game_over();
+    //     return;
+    // }
+    //
+    // // Changes room/grid if the player reaches a door
+    // for (Door door: doors){
+    //     if (door.door_pos == player_.get_position()){
+    //         if (door.changes_model_state){
+    //             change_to_stage_1();
+    //             player_.set_pos(door.destination[0], door.destination[1]);
+    //             model_state = 1;
+    //         }
+    //         else{
+    //             player_.set_pos(door.destination[0], door.destination[1]);
+    //         }
+    //     }
+    // }
+
 
 }
 
@@ -295,10 +343,11 @@ Model::shoot_up(Shooter shooterr){
     for (Position &pos: shooterr.arrows){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
+        if (good_position(pos)){
         pos = {pos.x, pos.y - 1};
-        arrows_.push_back(pos);
+        arrows_.push_back(pos);}
     }
-    if (time_total % 3 == 1){
+    if (time_total % 3 == 0){
 
         shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
                                                    - 1});
@@ -312,10 +361,11 @@ Model::shoot_down(Shooter shooterr){
     for (Position &pos: shooterr.arrows){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
+        if (good_position(pos)){
         pos = {pos.x, pos.y + 1};
-        arrows_.push_back(pos);
+        arrows_.push_back(pos);}
     }
-    if (time_total % 3 == 1){
+    if (time_total % 3 == 0){
         shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
                                                    +1});
         arrows_.push_back({shooterr.Pos.x, shooterr.Pos.y
@@ -326,10 +376,11 @@ Model::shoot_left(Shooter shooterr){
     for (Position &pos: shooterr.arrows){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
+        if (good_position(pos)){
         pos = {pos.x - 1, pos.y};
-        arrows_.push_back(pos);}
+        arrows_.push_back(pos);}}
 
-    if (time_total % 3 == 1){
+    if (time_total % 3 == 0){
         shooterr.arrows.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});
         arrows_.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});}
 }
@@ -339,10 +390,11 @@ Model::shoot_right(Shooter shooterr){
     for (Position &pos: shooterr.arrows){
         arrows_.erase(arrows_.begin() + get_element_index(arrows_,
                                                           pos));
+        if (good_position(pos)){
         pos = {pos.x + 1, pos.y};
-        arrows_.push_back(pos);
+        arrows_.push_back(pos);}
     }
-    if (time_total % 3 == 1){
+    if (time_total % 3 == 0){
         shooterr.arrows.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});
         arrows_.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});
     }
@@ -364,3 +416,26 @@ Model::get_treasure() const{
     return treasure;
 }
 
+
+bool
+Model::good_position(Position pos){
+    bool grids = 0 <= pos.x && pos.x < 12 &&
+                 0 <= pos.y && pos.y < 9;
+    bool wall = true;
+    for (Position poss: wall_){
+        if (pos == poss){
+            wall = false;
+        }
+    }
+    return grids && wall;
+}
+
+void
+Model::set_player_acc(std::vector<int> acc){
+    player_.set_velocity(acc);
+}
+
+void
+Model::set_player_pos(std::vector<int> pos){
+    player_.set_pos(pos[0], pos[1]);
+}

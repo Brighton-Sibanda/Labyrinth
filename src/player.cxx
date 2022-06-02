@@ -56,3 +56,7 @@ void
 Player::set_velocity(std::vector<int> velocityy){
     velocity = velocityy;
 }
+void
+Player::set_health(int heal){
+    health = heal;
+}

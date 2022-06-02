@@ -37,7 +37,7 @@ public:
     // converts vec to ge211 position
     Position vec_to_pos(std::vector<int>) const;
     // sets is_game_over to false
-    void start_game();
+    //void start_game();
     // returns the player object of the game
     Player get_player() const;
     // returns a vector
@@ -61,7 +61,7 @@ public:
     std::vector<int> pos_to_vec(Position);//converts ge211 position into vector
     void set_game_over();//ends the game
     bool player_against_wall(Position pos);//checks whether player can slide up
-    bool move(Dimensions dir);//moves the player in the given direction
+    bool move();//moves the player in the given direction
     void on_frame(float);//advances the game by a certain amount of frames
     void change_to_stage_1();//changes the attributes of model to the next grid
     int model_state = 0;
@@ -73,6 +73,11 @@ public:
     vector get_wall() const;
     vector get_coins() const;
     vector get_treasure() const;
+    bool good_position(Position);
+    void set_player_acc(std::vector<int>);
+    void set_player_pos(std::vector<int>);
+    bool is_game_over = false;
+
 
 private:
     //char board_[3][3];
@@ -86,7 +91,7 @@ private:
     Position trophy_;
     std::vector<Shooter> shooter_;
     Player player_;
-    bool is_game_over = true;
+
     vector wall_;
     float time_for_points;
     vector arrows_;
