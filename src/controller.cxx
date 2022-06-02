@@ -22,11 +22,6 @@ Controller::draw(ge211::Sprite_set& set)
 }
 
 void
-Controller::on_mouse_down(ge211::Mouse_button, ge211::Posn<int>) {
-    model_.start_game();
-}
-
-void
 Controller::on_frame(double dt){
     model_.on_frame(dt);
 }

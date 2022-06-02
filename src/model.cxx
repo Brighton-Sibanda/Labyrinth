@@ -37,7 +37,7 @@ Shooter::Shooter(char type,ge211::Posn<int> pos,
 
 // Especially for the player velocity
 Model::Position
-Model::vec_to_pos(std::vector<int> vec) {
+Model::vec_to_pos(std::vector<int> vec) const {
     return Position {vec[0], vec[1]};
 }
 
