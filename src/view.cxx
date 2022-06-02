@@ -16,7 +16,7 @@ View::draw(ge211::Sprite_set& set)
     for (Model::Position pos: model_.get_all() ){
         set.add_sprite(gen_sprite, {pos.x * grid_size, pos.y * grid_size});
     }
-
+    set.add_sprite(gen_sprite, {1 * grid_size, 1 * grid_size});
 }
 
 std::string

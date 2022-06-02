@@ -2,9 +2,10 @@
 
 
 Door::Door(bool state_change,std::vector<int> current, std::vector<int> dst)
-          :changes_model_state(state_change),
-          door_pos(current),
-          destination(dst)
+          :door_pos(current),
+
+          destination(dst),
+changes_model_state(state_change)
 
 
 {}
