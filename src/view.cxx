@@ -13,10 +13,15 @@ View::View(Model const& model)
         spike_sprite({grid_size, grid_size/2}, {255, 255,0}),
         treasure_sprite({grid_size/3, grid_size/3}, {148, 0,211}),
         trophy_sprite({grid_size/2, grid_size}, {200, 100,120}),
-        arrow_sprite({grid_size/4, grid_size/4}, {255, 0,0}),
-        coin_sprite(grid_size/6, {100, 70,0})
+        arrow_sprite({grid_size/10, grid_size/10}, {255, 0,0}),
+        coin_sprite(grid_size/6, {100, 70,0}),
+        shooter_sprite({grid_size, grid_size}, {120, 100,30})
+        // ,right_sprite("right.png"),
+        // left_sprite("left.png"),
+        // stationary_sprite("stationary.png")
 
-{ }
+
+{}
 
 void
 View::draw(ge211::Sprite_set& set) {
@@ -27,7 +32,8 @@ View::draw(ge211::Sprite_set& set) {
     }
     // Player Sprite
     set.add_sprite(player_sprite,
-                   model_.vec_to_pos(model_.get_player().get_position()),
+                   board_to_screen(model_.vec_to_pos(model_.get_player()
+                   .get_position())),
                    10);
 
     for (Model::Position pos: model_.get_wall()){
@@ -38,7 +44,9 @@ View::draw(ge211::Sprite_set& set) {
         .door_pos)), 3);
     }
     for (Model::Position pos: model_.get_coins()){
-        set.add_sprite(coin_sprite, board_to_screen(pos), 2);
+        Model::Position poss = board_to_screen({pos});
+        set.add_sprite(coin_sprite, {poss.x + grid_size/4, poss.y +
+        grid_size/4},2);
     }
 
     for (Model::Position pos: model_.get_spikes()){
@@ -48,11 +56,25 @@ View::draw(ge211::Sprite_set& set) {
         set.add_sprite(treasure_sprite, board_to_screen(pos), 4);
     }
     for (Shooter shooterr: model_.get_shooters()){
-        for (Model::Position pos: shooterr.arrows){
-            set.add_sprite(arrow_sprite, board_to_screen(pos), 7);
-        }
+        set.add_sprite(shooter_sprite, board_to_screen(shooterr.Pos), 4);
+
+    }
+    for (Model::Position pos: model_.get_arrows()){
+        Model::Position poss = board_to_screen({pos});
+        set.add_sprite(arrow_sprite, {poss.x + grid_size, poss.y +
+        grid_size/2},7);
     }
 
+
+    ge211::Text_sprite::Builder letter_builder(sans30);
+    letter_builder << std::to_string(model_.get_player().get_health());
+    health_sprite.reconfigure(letter_builder);
+    set.add_sprite(health_sprite, board_to_screen({2,0}), 4);
+
+    ge211::Text_sprite::Builder other_builder(sans30);
+    other_builder << std::to_string(model_.get_player().get_score());
+    score_sprite.reconfigure(other_builder);
+    set.add_sprite(score_sprite, board_to_screen({7,0}), 4);
 
 
 }

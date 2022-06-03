@@ -12,7 +12,8 @@ main()
                                    {8,8},{10,3},{11,3},
                                    {10,4},{11,4},{10,5}
                                    ,{11,5},{10,6},{11,6}},        // coin
-               std::vector<Shooter> {{'r', {0,2},{}}},         // shooter
+               std::vector<Shooter> {{'r', {0,2},{}}},         //
+               // shooter
                Model::vector {},        // spike
                Model::vector {},        // treasure
                Model::Position {1,9},  //trophy
@@ -29,6 +30,6 @@ main()
                                   {8,5},{9,5},{0,6},{1,6},
                                   {2,6},{3,6},{4,6},{5,6},
                                   {6,6},{7,6},{8,6},{9,6}}, // wall
-               Model::vector {}).run();       // arrow
+               Model::vector {{}}).run();       // arrow
     return 0;
 }

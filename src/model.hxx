@@ -77,6 +77,10 @@ public:
     void set_player_acc(std::vector<int>);
     void set_player_pos(std::vector<int>);
     bool is_game_over = false;
+    vector get_arrows() const;
+    void set_arrows(vector);
+
+
 
 
 private:
@@ -95,7 +99,7 @@ private:
     vector wall_;
     float time_for_points;
     vector arrows_;
-    int time_total;
+    int time_total = 0;
 
 };
 

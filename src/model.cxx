@@ -21,7 +21,6 @@ Model::Model(vector_of_doors door,
          time_for_points(300),
          arrows_(arrow)
 {
-    time_total =0;
 }
 
 Shooter::Shooter(char type,ge211::Posn<int> pos,
@@ -64,29 +63,25 @@ Model::get_elements(Position pos){
     // If there is an arrow in a given position
     for (Position poss : arrows_){
         if (pos == poss){
-            elements.push_back(Game_element(true, 'a', pos_to_vec(pos), -5,
-                                            {10, 10} ));
+            elements.push_back(Game_element(true, 'a', pos_to_vec(pos), -5));
         }
     }
     // If there are spikes in a given position
     for (Position poss: spikes_){
         if (pos == poss){
-            elements.push_back(Game_element(true,'s' , pos_to_vec(pos),-25,
-                                            {0, 0}));
+            elements.push_back(Game_element(true,'s' , pos_to_vec(pos),-25));
         }
     }
     // If there is a coin in a given position
     for (Position poss: coins){
         if (pos == poss){
-            elements.push_back(Game_element(true, 'c', pos_to_vec(pos),10,
-                                            {0, 0} ));
+            elements.push_back(Game_element(true, 'c', pos_to_vec(pos),10));
         }
     }
     // If there is a treasure chest in a given position
     for (Position poss: treasure){
         if (pos == poss){
-            elements.push_back(Game_element(true, 't',
-                                            pos_to_vec(pos),100,{0, 0}));
+            elements.push_back(Game_element(true, 't',pos_to_vec(pos),100));
         }
     }
 
@@ -195,7 +190,8 @@ Model::set_wall(std::vector<Position> vec) {
 void
 Model::set_game_over() {
     is_game_over = true;
-    player_.set_score(time_for_points);
+    if (time_for_points > 0){
+    player_.set_score(time_for_points);}
 }
 
 ///////////////////////
@@ -268,57 +264,17 @@ Model::move(){
 }
 
 void
-Model::on_frame(float dt){
-   if (is_game_over){
-       return;
-   }
+Model::on_frame(float dt)
+{
+    if (is_game_over) {
+        return;
+    }
+    apply_elements(vec_to_pos(player_.get_position()));
     time_for_points -= 1;
-    time_total += dt;
+    time_total += 1;
     shoot();
-    // if (!good_position(vec_to_pos(player_.get_position())) || is_game_over){
-    //     player_.set_velocity({0,0});
-    //     return;}
-    // int health = player_.get_health();
-    // Position current = vec_to_pos(player_.get_position());
-    // Position next = {current.x + player_.get_velocity()[0], current.y +
-    //                  player_.get_velocity()[1]};
-    //
-    // // applies all elements in the position the player is moving into
-    // apply_elements(next);
-    //
-    // if (player_.get_health() < health){
-    //     return;
-    // }
-    // // Sets player's new position and velocity
-    // if (good_position(next)){
-    //     player_.set_pos(next.x, next.y);
-    //     int x = player_.get_velocity()[0] + player_.get_acceleration()[0];
-    //     int y = player_.get_velocity()[1] + player_.get_acceleration()[1];
-    //     player_.set_velocity({x, y});}
-    //
-    // // If the trophy is reached
-    // if (player_.get_position() == pos_to_vec(trophy_)) {
-    //     set_game_over();
-    //     return;
-    // }
-    //
-    // // Changes room/grid if the player reaches a door
-    // for (Door door: doors){
-    //     if (door.door_pos == player_.get_position()){
-    //         if (door.changes_model_state){
-    //             change_to_stage_1();
-    //             player_.set_pos(door.destination[0], door.destination[1]);
-    //             model_state = 1;
-    //         }
-    //         else{
-    //             player_.set_pos(door.destination[0], door.destination[1]);
-    //         }
-    //     }
-    // }
-
 
 }
-
 void
 Model::change_to_stage_1() {
 
@@ -346,64 +302,111 @@ Model::shoot(){
 //Helper functions for shoot
 void
 Model::shoot_up(Shooter shooterr){
-    for (Position &pos: shooterr.arrows){
-        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
-                                                          pos));
-        if (good_position(pos)){
-        pos = {pos.x, pos.y - 1};
-        arrows_.push_back(pos);}
-    }
-    if (time_total % 3 == 0){
+    Position pos = shooterr.Pos;
+    std::vector<Game_element> elements;
+    if (time_total % 200 == 0){
+        for (int i = pos.y; i>=0;i--){
+            std::vector<Game_element> elementos = get_elements({pos.x, i});
+            for (Game_element elemento: elementos){
+                elements.push_back(elemento);
 
-        shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
-                                                   - 1});
-        arrows_.push_back({shooterr.Pos.x, shooterr.Pos.y
-                                           - 1});
+            }
+        }
+        for (Game_element elemento: elements){
+            if (elemento.type == 'a' && good_position(vec_to_pos(elemento.pos))){
+                arrows_.push_back({elemento.pos[0], elemento.pos[1]-1});
+                arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                                  vec_to_pos
+                                                                          (elemento
+                                                                                   .pos)));
+            }}
+
+        }
+    if (time_total % 600 == 0){
+        arrows_.push_back({shooterr.Pos.x, shooterr.Pos.y -1});
     }
 }
 
 void
 Model::shoot_down(Shooter shooterr){
-    for (Position &pos: shooterr.arrows){
-        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
-                                                          pos));
-        if (good_position(pos)){
-        pos = {pos.x, pos.y + 1};
-        arrows_.push_back(pos);}
+    Position pos = shooterr.Pos;
+    std::vector<Game_element> elements;
+    if (time_total % 200 == 0) {
+        for (int i = pos.y; i < 12; i++) {
+            std::vector<Game_element> elementos = get_elements({pos.x, i});
+            for (Game_element elemento: elementos) {
+                elements.push_back(elemento);
+
+            }
+        }
+        for (Game_element elemento: elements) {
+            if (elemento.type == 'a' &&
+                good_position(vec_to_pos(elemento.pos))) {
+                arrows_.push_back({elemento.pos[0], elemento.pos[1] + 1});
+                arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                                  vec_to_pos
+                                                                          (elemento
+                                                                                   .pos)));
+            }
+        }
     }
-    if (time_total % 3 == 0){
-        shooterr.arrows.push_back({shooterr.Pos.x, shooterr.Pos.y
-                                                   +1});
-        arrows_.push_back({shooterr.Pos.x, shooterr.Pos.y
-                                           +1});}
+        if (time_total % 600 ==0 ){
+            arrows_.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});}
 }
 void
 Model::shoot_left(Shooter shooterr){
-    for (Position &pos: shooterr.arrows){
-        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
-                                                          pos));
-        if (good_position(pos)){
-        pos = {pos.x - 1, pos.y};
-        arrows_.push_back(pos);}}
+    Position pos = shooterr.Pos;
+    std::vector<Game_element> elements;
+    if (time_total % 200 == 0) {
+        for (int i = pos.x; i >= 0; i--) {
+            std::vector<Game_element> elementos = get_elements({i, pos.y});
+            for (Game_element elemento: elementos) {
+                elements.push_back(elemento);
 
-    if (time_total % 3 == 0){
-        shooterr.arrows.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});
-        arrows_.push_back({shooterr.Pos.x - 1, shooterr.Pos.y});}
+            }
+        }
+        for (Game_element elemento: elements) {
+            if (elemento.type == 'a' &&
+                good_position(vec_to_pos(elemento.pos))) {
+                arrows_.push_back({elemento.pos[0] - 1, elemento.pos[1]});
+                arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                                  vec_to_pos
+                                                                          (elemento
+                                                                                   .pos)));
+            }
+        }
+    }
+    if (time_total % 600 == 0){
+        arrows_.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});}
 }
 
 void
 Model::shoot_right(Shooter shooterr){
-    for (Position &pos: shooterr.arrows){
-        arrows_.erase(arrows_.begin() + get_element_index(arrows_,
-                                                          pos));
-        if (good_position(pos)){
-        pos = {pos.x + 1, pos.y};
-        arrows_.push_back(pos);}
+
+    Position pos = shooterr.Pos;
+    std::vector<Game_element> elements;
+    if (time_total % 200 == 0) {
+        for (int i = pos.x; i < 12; i++) {
+            std::vector<Game_element> elementos = get_elements({i, pos.y});
+            for (Game_element elemento: elementos) {
+                elements.push_back(elemento);
+
+            }
+        }
+        for (Game_element elemento: elements) {
+            if (elemento.type == 'a' &&
+                good_position(vec_to_pos(elemento.pos))) {
+                arrows_.push_back({elemento.pos[0] + 1, elemento.pos[1]});
+                arrows_.erase(arrows_.begin() + get_element_index(arrows_,
+                                                                  vec_to_pos
+                                                                          (elemento
+                                                                                   .pos)));
+            }
+        }
     }
-    if (time_total % 3 == 0){
-        shooterr.arrows.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});
-        arrows_.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});
-    }
+    if(time_total % 400 == 0){
+    arrows_.push_back({shooterr.Pos.x + 1, shooterr.Pos.y});}
+
 }
 
 
@@ -425,8 +428,8 @@ Model::get_treasure() const{
 
 bool
 Model::good_position(Position pos){
-    bool grids = 0 <= pos.x && pos.x < 12 * 60 &&
-                 0 <= pos.y && pos.y < 9 * 60;
+    bool grids = 0 <= pos.x && pos.x < 12 &&
+                 0 <= pos.y && pos.y < 9;
     bool wall = true;
     for (Position poss: wall_){
         if (pos == poss){
@@ -444,4 +447,13 @@ Model::set_player_acc(std::vector<int> acc){
 void
 Model::set_player_pos(std::vector<int> pos){
     player_.set_pos(pos[0], pos[1]);
+}
+
+Model::vector
+Model::get_arrows() const{
+    return arrows_;
+}
+void
+Model::set_arrows(vector arrow){
+    arrows_ = arrow;
 }
