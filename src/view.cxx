@@ -2,6 +2,8 @@
 
 int grid_size = 60;
 
+
+
 View::View(Model const& model)
         : model_(model),
         gen_sprite({grid_size, grid_size}, {46, 0,0}),
@@ -30,7 +32,8 @@ View::draw(ge211::Sprite_set& set) {
     }
     // Player Sprite
     set.add_sprite(player_sprite,
-                   model_.vec_to_pos(model_.get_player().get_position()),
+                   board_to_screen(model_.vec_to_pos(model_.get_player()
+                   .get_position())),
                    10);
 
     for (Model::Position pos: model_.get_wall()){
