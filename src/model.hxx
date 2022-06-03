@@ -75,6 +75,7 @@ public:
     vector get_treasure() const;
     bool good_position(Position);
     void set_player_acc(std::vector<int>);
+    void set_player_vel(std::vector<int> vel);
     void set_player_pos(std::vector<int>);
     bool is_game_over = false;
     vector get_arrows() const;

@@ -1,6 +1,7 @@
 #include "model.hxx"
+#include <iostream>
 
-
+int grid_model_cxx = 60;
 
 Model::Model(vector_of_doors door,
              vector coins,
@@ -210,55 +211,54 @@ bool
 Model::move(){
 
     // Checks if the game is over
-    if (player_.get_health() == 0 || is_game_over){
-        set_game_over();
-        return false;
-    }
+    // if (player_.get_health() == 0 || is_game_over){
+    //     set_game_over();
+    //     return false;
+    // }
 
     // Player overlaps with an obstacle
-    if (!good_position(vec_to_pos(player_.get_position())) || is_game_over){
-        player_.set_velocity({0,0});
-        return true;
-    }
+    // if (!good_position(vec_to_pos(player_.get_position())) || is_game_over){
+    //     player_.set_velocity({0,0});
+    //     return true;
+    // }
 
     int health = player_.get_health();
     Position current = vec_to_pos(player_.get_position());
     Position next = {current.x + player_.get_velocity()[0],
-                     current.y + player_.get_velocity()[1]};
+                     current.y - player_.get_velocity()[1]};
 
     // applies all elements in the position the player is moving into
-    apply_elements(next);
+    // apply_elements(next);
 
-    if (player_.get_health() < health){
-        return true;
-    }
+    // if (player_.get_health() < health){
+    //     return true;
+    // }
 
     // Sets player's new position and velocity
     if (good_position(next)){
         player_.set_pos(next.x, next.y);
-        int x = player_.get_velocity()[0] + player_.get_acceleration()[0];
-        int y = player_.get_velocity()[1] + player_.get_acceleration()[1];
-        player_.set_velocity({x, y});}
+        player_.accelerate();
+    }
 
     // If the trophy is reached
-    if (player_.get_position() == pos_to_vec(trophy_)) {
-        set_game_over();
-        return true;
-    }
-
-    // Changes room/grid if the player reaches a door
-    for (Door door: doors){
-        if (door.door_pos == player_.get_position()){
-            if (door.changes_model_state){
-                change_to_stage_1();
-                player_.set_pos(door.destination[0], door.destination[1]);
-                model_state = 1;
-            }
-            else{
-                player_.set_pos(door.destination[0], door.destination[1]);
-            }
-        }
-    }
+    // if (player_.get_position() == pos_to_vec(trophy_)) {
+    //     set_game_over();
+    //     return true;
+    // }
+    //
+    // // Changes room/grid if the player reaches a door
+    // for (Door door: doors){
+    //     if (door.door_pos == player_.get_position()){
+    //         if (door.changes_model_state){
+    //             change_to_stage_1();
+    //             player_.set_pos(door.destination[0], door.destination[1]);
+    //             model_state = 1;
+    //         }
+    //         else{
+    //             player_.set_pos(door.destination[0], door.destination[1]);
+    //         }
+    //     }
+    // }
 
     return false;
 }
@@ -273,7 +273,7 @@ Model::on_frame(float dt)
     time_for_points -= 1;
     time_total += 1;
     shoot();
-
+    move();
 }
 void
 Model::change_to_stage_1() {
@@ -428,8 +428,8 @@ Model::get_treasure() const{
 
 bool
 Model::good_position(Position pos){
-    bool grids = 0 <= pos.x && pos.x < 12 &&
-                 0 <= pos.y && pos.y < 9;
+    bool grids = 0 <= pos.x && pos.x < 12 * grid_model_cxx &&
+                 0 <= pos.y && pos.y < 9 * grid_model_cxx;
     bool wall = true;
     for (Position poss: wall_){
         if (pos == poss){
@@ -441,7 +441,12 @@ Model::good_position(Position pos){
 
 void
 Model::set_player_acc(std::vector<int> acc){
-    player_.set_velocity(acc);
+    player_.set_acceleration(acc);
+}
+
+void
+Model::set_player_vel(std::vector<int> vel){
+    player_.set_velocity(vel);
 }
 
 void

@@ -4,16 +4,20 @@
 
 #include "player.hxx"
 
+int grid_player_cxx = 60;
+
 Player::Player()
-    : current_pos({1 , 8}), // grid_size
+    : current_pos({1 * grid_player_cxx, 8 * grid_player_cxx}), // grid_size
       health(4),
       score(0),
       velocity({0,0}),
-      acceleration({0, 0})
-
-
+      acceleration({0, -1}),
+      jump(false)
 {}
 
+/////////////////////////////
+// GET Functions ////////////
+/////////////////////////////
 std::vector<int>
 Player::get_position(){
     return current_pos;
@@ -34,18 +38,14 @@ std::vector<int>
 Player::get_acceleration(){
     return acceleration;
 }
-void
-Player::reduce_health(){
-    health -= 1;
+bool
+Player::get_jump(){
+    return jump;
 }
-void
-Player::set_score(float change){
-    score += change;
-}
-void
-Player::set_acceleration(std::vector<int> change){
 
-  acceleration = change;}
+/////////////////////////////
+// SET Functions ////////////
+/////////////////////////////
 
 void
 Player::set_pos(int a, int b){
@@ -53,10 +53,36 @@ Player::set_pos(int a, int b){
     current_pos[1] = b;
 }
 void
+Player::set_health(int heal){
+    health = heal;
+}
+void
+Player::set_score(float change){
+    score += change;
+}
+void
 Player::set_velocity(std::vector<int> velocityy){
     velocity = velocityy;
 }
 void
-Player::set_health(int heal){
-    health = heal;
+Player::set_acceleration(std::vector<int> change){
+    acceleration = change;
+}
+void
+Player::set_jump(bool jumpp){
+    jump = jumpp;
+}
+
+/////////////////////////////
+// STATE Functions ////////////
+/////////////////////////////
+
+void
+Player::reduce_health(){
+    health -= 1;
+}
+void
+Player::accelerate() {
+    velocity[0] += acceleration[0];
+    velocity[1] += acceleration[1];
 }
