@@ -27,7 +27,7 @@ public:
     void set_acceleration(std::vector<int> acc);
     void set_pos(int, int);
     void set_velocity(std::vector<int>);
-    void set_health(int);
+    // void set_health(int);
 
 private:
     std::vector<int> current_pos;

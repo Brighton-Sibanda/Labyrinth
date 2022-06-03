@@ -22,7 +22,7 @@ class Model
 public:
     using Position = ge211::Posn<int>;
     using vector = std::vector<Position>;
-    using Dimensions = ge211::Posn<int>;
+    //using Dimensions = ge211::Posn<int>;
     using vector_of_doors = std::vector<Door>;
 
     Model(vector_of_doors door,
@@ -60,11 +60,12 @@ public:
     void set_wall(std::vector<Position>);//sets the wall positions
     std::vector<int> pos_to_vec(Position);//converts ge211 position into vector
     void set_game_over();//ends the game
-    bool player_against_wall(Position pos);//checks whether player can slide up
+    //bool player_against_wall(Position pos);//checks whether player can
+    // slide up
     bool move();//moves the player in the given direction
     void on_frame(float);//advances the game by a certain amount of frames
     void change_to_stage_1();//changes the attributes of model to the next grid
-    int model_state = 0;
+    //int model_state = 0;
     void shoot();//shoot arrows in a straight line
     void shoot_up(Shooter);
     void shoot_down(Shooter);
@@ -75,10 +76,12 @@ public:
     vector get_treasure() const;
     bool good_position(Position);
     void set_player_acc(std::vector<int>);
-    void set_player_pos(std::vector<int>);
+    //void set_player_pos(std::vector<int>);
     bool is_game_over = false;
     vector get_arrows() const;
     void set_arrows(vector);
+    void set_trophy(Position);
+    Position get_trophy() const;
 
 
 

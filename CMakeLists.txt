@@ -19,7 +19,7 @@ add_program(${GAME_EXE}
         ${MODEL_SRC}
         src/view.cxx
         src/controller.cxx
-        src/main.cxx)
+        src/Labyrinth.cxx)
 target_link_libraries(${GAME_EXE} ge211)
 
 add_test_program(model_test

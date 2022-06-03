@@ -8,9 +8,9 @@ public:
     explicit View(Model const& model);
 
     void draw(ge211::Sprite_set& set);
-    std::string initial_window_title() const;
+    //std::string initial_window_title() const;
     ge211::Dims<int> initial_window_dimensions() const;
-    ge211::Posn<int> screen_to_board(ge211::Posn<int>) const;
+    //ge211::Posn<int> screen_to_board(ge211::Posn<int>) const;
     ge211::Posn<int> board_to_screen(ge211::Posn<int>) const;
 
 

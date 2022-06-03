@@ -76,23 +76,17 @@ View::draw(ge211::Sprite_set& set) {
     score_sprite.reconfigure(other_builder);
     set.add_sprite(score_sprite, board_to_screen({7,0}), 4);
 
+    //set.add_sprite(left_sprite, board_to_screen({5,6}), 3);
+    set.add_sprite(trophy_sprite, board_to_screen(model_.get_trophy()), 6);
 
 }
 
-std::string
-View::initial_window_title() const {
-    return "Labyrinth";
-}
 
 ge211::Dims<int>
 View::initial_window_dimensions() const {
     return ge211::Dims<int> {12 * grid_size, 9 * grid_size};
 }
 
-ge211::Posn<int>
-View::screen_to_board(ge211::Posn<int> posn) const {
-    return {posn.x / grid_size, posn.y / grid_size};
-}
 
 ge211::Posn<int>
 View::board_to_screen(ge211::Posn<int> posn) const {
