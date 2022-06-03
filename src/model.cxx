@@ -191,7 +191,11 @@ void
 Model::set_game_over() {
     is_game_over = true;
     if (time_for_points > 0){
-    player_.set_score(time_for_points);}
+    player_.set_score(time_for_points);
+    }
+    if (player_.get_health() == 4){
+        player_.set_score(200);
+    }
 }
 
 

@@ -29,6 +29,8 @@ private:
     ge211::Font sans30{"sans.ttf", 30};
     ge211::Text_sprite health_sprite;
     ge211::Text_sprite score_sprite;
+    ge211::Text_sprite win_sprite;
+    ge211::Text_sprite lose_sprite;
     // ge211::Image_sprite right_sprite;
     // ge211::Image_sprite left_sprite;
     // ge211::Image_sprite stationary_sprite;

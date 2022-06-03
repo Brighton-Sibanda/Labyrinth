@@ -79,6 +79,24 @@ View::draw(ge211::Sprite_set& set) {
     //set.add_sprite(left_sprite, board_to_screen({5,6}), 3);
     set.add_sprite(trophy_sprite, board_to_screen(model_.get_trophy()), 6);
 
+    ge211::Text_sprite::Builder winner_builder(sans30);
+    winner_builder << "You Have Won! Congrats";
+    win_sprite.reconfigure(winner_builder);
+    std::vector<int> Pos ={model_.get_trophy().x, model_.get_trophy().y};
+    if (model_.get_player().get_position() == Pos){
+        set.add_sprite(win_sprite, board_to_screen({3,5}), 10);
+    }
+
+    ge211::Text_sprite::Builder loser_builder(sans30);
+    loser_builder << "You Have lost! try again.";
+    lose_sprite.reconfigure(loser_builder);
+    if (model_.get_player().get_health() == 0){
+        set.add_sprite(lose_sprite, board_to_screen({3,5}), 10);
+    }
+
+
+
+
 }
 
 
