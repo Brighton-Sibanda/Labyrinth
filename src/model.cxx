@@ -193,9 +193,10 @@ Model::set_game_over() {
     if (time_for_points > 0){
     player_.set_score(time_for_points);
     }
-    if (player_.get_health() == 4){
-        player_.set_score(200);
+    if (player_.get_health() != 0 && time_total !=0){
+        player_.set_score(50*player_.get_health());
     }
+    time_total = 0;
 }
 
 
@@ -270,7 +271,8 @@ Model::move(){
 void
 Model::on_frame(float dt)
 {
-    if (is_game_over) {
+    if (is_game_over || player_.get_health() == 0) {
+        set_game_over();
         return;
     }
     apply_elements(vec_to_pos(player_.get_position()));

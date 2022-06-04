@@ -11,7 +11,6 @@ Player::Player()
       velocity({0,0}),
       acceleration({0, 0})
 
-
 {}
 
 std::vector<int>
@@ -56,7 +55,3 @@ void
 Player::set_velocity(std::vector<int> velocityy){
     velocity = velocityy;
 }
-// void
-// Player::set_health(int heal){
-//     health = heal;
-// }
